@@ -1,15 +1,27 @@
 /******************************************
-Treehouse FSJS Techdegree:
 project 1 - A Random Quote Generator
 ******************************************/
+
+
+let randomQuote = '';
+let randomBgColor = '';
+let quoteAuthor = '';
+let quoteCitation = '';
+let quoteYear;
+let getQuote;
+let printTheQuote = '';
+
+
+
+
 
 // For assistance: 
   // Check the "Project Resources" section of the project instructions
   // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
 
-/*** 
- * `quotes` array 
-***/
+/************ 
+  quotes array 
+*************/
 let quotes = [
   { quote: 'I\'m killing time while I wait for life to shower me with meaning and happiness.', 
     author: 'Bill Watterson', 
@@ -54,49 +66,90 @@ let quotes = [
   { quote: 'I am and always will be the optimist. The hoper of far-flung hopes and the dreamer of improbable dreams.', 
     author: 'Dr. Who', 
     citation: 'Season 6, Episode 6 - \'The Almost People\'',
-    year: 1982
+    year: ''
   },
   { quote: 'I am and always will be the optimist. The hoper of far-flung hopes and the dreamer of improbable dreams.', 
     author: 'Dr. Who', 
     citation: 'Season 6, Episode 6 - \'The Almost People\'',
-    year: 1982
+    year: '2974'
   }
+
+]
+/************ 
+random colors array
+*************/
+let bgcolors = [
+{ color: '#e8c2f2'},
+{ color: '#6cafd9'},
+{ color: '#ffb00d'},
+{ color: '#3a2073'},
+{ color: '#9ce8e8'},
+{ color: '#F2594B'},
+{ color: '#3B6670'},
+{ color: '#FF9D7A'}
 
 ]
 
 
-/***
- * `getRandomQuote` function
-***/
-let randomQuote = '';
-let quoteAuthor = '';
-let quoteCitation = '';
-let quoteYear;
-let randomness;
 
+
+/************ 
+Random Color function
+************/
+function getRandomBgColor(){
+  //Get a random number between 0 & 7 - the length of colors array
+  const randomColor = Math.floor(Math.random() * (bgcolors.length) ) ;
+
+  randomBgColor = bgcolors[randomColor].color;
+
+  document.body.style.backgroundColor = randomBgColor;
+}
+ 
+
+
+
+
+/************ 
+Random Quote function
+************/
 function getRandomQuote(){
-//Get a random number between 1 & 10
+//Get a random number between 0 & 9 - the length of the quotes arrayor
   const randomNum = Math.floor(Math.random() * (quotes.length) ) ;
 
   randomQuote = quotes[randomNum].quote;
   quoteAuthor = quotes[randomNum].author;
   quoteCitation = quotes[randomNum].citation;
   quoteYear = quotes[randomNum].year;
+  
+  getRandomBgColor();
 } 
 
-getRandomQuote();
-// console.log(randomQuote);
-// console.log(quoteAuthor);
-// console.log(quoteCitation);
-// console.log(quoteYear);
 
-
-/***
- * `printQuote` function
-***/
+/************ 
+ printQuote function
+************/
 function printQuote(){
-  randomness = getRandomQuote();
+
+  getQuote = getRandomQuote();
+
+  printTheQuote = '<p class="quote">' + randomQuote + '</p>';
+  printTheQuote += '<p class="source">' + quoteAuthor ;
+
+  if (quoteCitation !== 'undefined' ){
+    printTheQuote += '  <span class="citation">'+ quoteCitation + '</span>';
+  }
+  if ( quoteYear !== 'undefined') {
+    printTheQuote += '<span class="year">' + quoteYear + '</span></p>';
+  }
+
+  document.getElementById('quote-box').innerHTML = printTheQuote;
 }
+
+
+
+
+
+
 
 
 /***
