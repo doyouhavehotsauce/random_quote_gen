@@ -1,51 +1,64 @@
+
+
+
 /******************************************
 project 1 - A Random Quote Generator
 ******************************************/
 
+/******************************************
+Hello! Welcome to my code!  
 
+I'm shooting for an exceeds expectations here.
+******************************************/
+
+
+
+/******************************************
+Declaring all variables
+******************************************/
 let randomQuote = '';
 let randomBgColor = '';
 let quoteAuthor = '';
 let quoteCitation = '';
 let quoteYear;
+let quoteGenre;
 let getQuote;
 let printTheQuote = '';
+//set interval to change quote and background color every 10 seconds.
+let colorTimer = setInterval(printQuote, 10000);
 
 
 
 
-
-// For assistance: 
-  // Check the "Project Resources" section of the project instructions
-  // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
 
 /************ 
-  quotes array 
+  Quotes Array 
 *************/
 let quotes = [
   { quote: 'I\'m killing time while I wait for life to shower me with meaning and happiness.', 
     author: 'Bill Watterson', 
     citation: 'Calvin and Hobbes',
+    genre: 'Comedy',
     year: 1988
   },
   { quote: 'You know what\'s weird? Day by day, nothing seems to change, but pretty soon...everything\'s different', 
     author: 'Bill Watterson', 
     citation: 'Calvin and Hobbes',
-    year: 1989
+    genre: 'Comedy'
   },
   { quote: 'You’ve got to be very careful if you don’t know where you are going, because you might not get there', 
     author: 'Yogi Berra', 
-    citation: 'Source Unknown',
     year: 1973
   },
   { quote: 'You’ll miss the best things if you keep your eyes shut. Sometimes the questions are complicated and the answers are simple.', 
-    author: 'Dr. Seuss', 
-    citation: 'Source Unknown',
+    author: 'Dr. Seuss',
+    genre: 'Fiction',
     year: 1964
   },
   { quote: 'This must be Thursday,\' said Arthur to himself, sinking low over his beer. \'I never could get the hang of Thursdays.', 
     author: 'Douglas Adams', 
     citation: 'The Hitchhikers Guide to the Galaxy',
+    genre: 'Sci-Fi',
     year: 1978
   },
   { quote: 'I never trust people with no appetite. It’s like they’re always holding something back on you.', 
@@ -66,17 +79,19 @@ let quotes = [
   { quote: 'I am and always will be the optimist. The hoper of far-flung hopes and the dreamer of improbable dreams.', 
     author: 'Dr. Who', 
     citation: 'Season 6, Episode 6 - \'The Almost People\'',
-    year: ''
   },
-  { quote: 'I am and always will be the optimist. The hoper of far-flung hopes and the dreamer of improbable dreams.', 
-    author: 'Dr. Who', 
-    citation: 'Season 6, Episode 6 - \'The Almost People\'',
-    year: '2974'
+  { quote: 'Do anything, but let it produce joy.', 
+    author: 'Walt Whitman', 
+    genre: 'Motivation'
   }
 
 ]
 /************ 
-random colors array
+Colors Array
+
+Used hex codes here because for some 
+reason I couldn't get rgb to work. Any idea
+why that might have been?
 *************/
 let bgcolors = [
 { color: '#e8c2f2'},
@@ -87,7 +102,6 @@ let bgcolors = [
 { color: '#F2594B'},
 { color: '#3B6670'},
 { color: '#FF9D7A'}
-
 ]
 
 
@@ -113,20 +127,21 @@ function getRandomBgColor(){
 Random Quote function
 ************/
 function getRandomQuote(){
-//Get a random number between 0 & 9 - the length of the quotes arrayor
+//Get a random number between 0 & 9 - the length of the quotes array
   const randomNum = Math.floor(Math.random() * (quotes.length) ) ;
 
   randomQuote = quotes[randomNum].quote;
   quoteAuthor = quotes[randomNum].author;
   quoteCitation = quotes[randomNum].citation;
   quoteYear = quotes[randomNum].year;
-  
+  quoteGenre = quotes[randomNum].genre;
+  //calling the random background function
   getRandomBgColor();
 } 
 
 
 /************ 
- printQuote function
+ printQuote function - concatenates and prints the quote to the page
 ************/
 function printQuote(){
 
@@ -135,19 +150,34 @@ function printQuote(){
   printTheQuote = '<p class="quote">' + randomQuote + '</p>';
   printTheQuote += '<p class="source">' + quoteAuthor ;
 
-  if (quoteCitation !== 'undefined' ){
-    printTheQuote += '  <span class="citation">'+ quoteCitation + '</span>';
+  //checking to see if there is a year, citation, or genre.  if not undefined will add to quote.
+  if (quoteCitation !== undefined ){
+    printTheQuote += '<span class="citation">'+ quoteCitation + '</span>';
+  } 
+  if ( quoteYear !== undefined) {
+    printTheQuote += '<span class="year">' + quoteYear + '</span>';
   }
-  if ( quoteYear !== 'undefined') {
-    printTheQuote += '<span class="year">' + quoteYear + '</span></p>';
+  if ( quoteGenre !== undefined) {
+    printTheQuote += '<span class="genre">'+ ',&nbsp;' + quoteGenre + '</span></p>';
   }
-
+  //appending quote to the quote-box node
   document.getElementById('quote-box').innerHTML = printTheQuote;
 }
 
 
 
 
+/************ 
+ Random Background Color Function
+************/
+function bgColor(){
+  //Get a random number between 0 & 7 - the length of colors array
+  const randomColor = Math.floor(Math.random() * (bgcolors.length) ) ;
+
+  randomBgColor = bgcolors[randomColor].color;
+
+  document.body.style.backgroundColor = randomBgColor;
+}
 
 
 
